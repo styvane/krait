@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/hutsharing/krait/http"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -35,6 +33,5 @@ func init() {
 
 func serve(cmd *cobra.Command, args []string) {
 	server := http.NewServer()
-	server.Run()
-	fmt.Println("Running server...")
+	server.Start()
 }
