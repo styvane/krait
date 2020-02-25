@@ -19,15 +19,15 @@ func init() {
 
 	// Add debugging mode flag
 	serveCmd.Flags().Bool("debug", true, "Enable debugging mode")
-	viper.GetViper().BindPFlag("debug", serveCmd.Flags().Lookup("debug"))
 
 	// Add port flag
 	serveCmd.Flags().UintP("port", "p", 9000, "Port to run server on.")
-	viper.GetViper().BindPFlag("port", serveCmd.Flags().Lookup("port"))
 
-	// add host name flag
+	// Add host name flag
 	serveCmd.Flags().String("host", "127.0.0.1", "Listen on localhost")
-	viper.GetViper().BindPFlag("host", serveCmd.Flags().Lookup("host"))
+
+	// Bind the cobra flags to our config
+	viper.GetViper().BindPFlags(serveCmd.Flags())
 
 }
 
