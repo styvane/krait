@@ -2,7 +2,7 @@ package authentication
 
 import (
 	"github.com/go-playground/validator"
-	"github.com/nyaruka/phonenumbers"
+	"github.com/hutsharing/krait/validation"
 )
 
 // LoginRequest describes the request posted to login.
@@ -15,14 +15,10 @@ type LoginRequest struct {
 // Validate validates LoginRequest.
 // It returns nil if the struct is valid or the error if the struct is invalid
 func (l *LoginRequest) Validate() error {
-	validate := validator.New()
-	err := validate.Struct(l)
+	v := validator.New()
+	err := v.Struct(l)
 	if err != nil {
 		return err
 	}
-	_, err = phonenumbers.Parse(l.PhoneNumber, l.CountryCode)
-	if err != nil {
-		return err
-	}
-	return nil
+	return validation.PhoneNumber(l.PhoneNumber, l.CountryCode)
 }
