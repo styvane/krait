@@ -10,13 +10,17 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
+var (
+	cfgFile string
+	Version string
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "krait",
-	Short: "HTTP web server.",
-	Long:  `Web server.`,
+	Use:     "krait",
+	Short:   "HTTP web server.",
+	Long:    `Web server.`,
+	Version: Version,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -32,6 +36,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.krait.toml)")
+
 }
 
 // initConfig reads in config file and ENV variables if set.

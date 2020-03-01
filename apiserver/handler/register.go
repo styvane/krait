@@ -1,12 +1,13 @@
-package http
+package handler
 
 import (
 	"net/http"
 
+	"github.com/hutsharing/krait/apiserver"
 	"github.com/hutsharing/krait/registration"
 )
 
-func (s *server) InitiateRegistrationHandle() http.HandlerFunc {
+func InitiateRegistrationHandle(s *apiserver.Server) http.HandlerFunc {
 
 	type response struct {
 		Message string `json:"message"`
@@ -15,6 +16,7 @@ func (s *server) InitiateRegistrationHandle() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		var sr registration.Request
+
 		err := s.Decode(w, r, &sr)
 		if err != nil {
 			http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -28,5 +30,4 @@ func (s *server) InitiateRegistrationHandle() http.HandlerFunc {
 		resp := &response{"success", http.StatusOK}
 		s.Encode(w, resp)
 	}
-
 }

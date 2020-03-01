@@ -1,14 +1,16 @@
-package http
+package handler
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/hutsharing/krait/apiserver"
 )
 
 func TestInitiateRegistrationHandle(t *testing.T) {
-	s := NewServer()
+	s := apiserver.NewServer()
 	srv := httptest.NewServer(s.InitiateRegistrationHandle())
 	data := []struct {
 		payload string

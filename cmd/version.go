@@ -16,21 +16,22 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
+	"os"
+	"text/template"
 
 	"github.com/spf13/cobra"
 )
 
-// current server version
-var Version string
-
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "Print the version number",
-	Long:  "Print current server version.",
+	Use:     "version",
+	Short:   "Print the version number",
+	Long:    "Print current server version.",
+	Version: Version,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(Version)
+		cmd.SetVersionTemplate(cmd.VersionTemplate())
+		tpl := template.Must(template.New("version").Parse(cmd.VersionTemplate()))
+		tpl.Execute(os.Stdout, cmd.Root())
 	},
 }
 
