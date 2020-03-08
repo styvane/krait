@@ -63,6 +63,5 @@ func (s *Server) Decode(w http.ResponseWriter, r *http.Request, v interface{}) e
 // Encode response
 func (s *Server) Encode(w http.ResponseWriter, v interface{}) error {
 	e := json.NewEncoder(w)
-	w.Header().Set("Content-Type", "application/json")
 	return e.Encode(v)
 }

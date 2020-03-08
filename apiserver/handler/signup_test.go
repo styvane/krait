@@ -11,7 +11,9 @@ import (
 
 func TestInitiateRegistrationHandle(t *testing.T) {
 	s := apiserver.NewServer()
-	srv := httptest.NewServer(s.InitiateRegistrationHandle())
+	srv := httptest.NewServer(InitiateSignUpHandle(s))
+	defer srv.Close()
+
 	data := []struct {
 		payload string
 		status  int
