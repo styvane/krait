@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/hutsharing/krait/apiserver"
 	"github.com/hutsharing/krait/apiserver/resource"
+	"github.com/hutsharing/krait/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -33,7 +34,8 @@ func init() {
 }
 
 func serve(cmd *cobra.Command, args []string) {
-	server := apiserver.NewServer()
+	config := config.Load(viper.GetViper())
+	server := apiserver.NewServer(config)
 	resource.Route(server)
 	server.Start()
 }
