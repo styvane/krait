@@ -1,7 +1,7 @@
-package authentication
+package auth
 
 import (
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/hutsharing/krait/validation"
 )
 

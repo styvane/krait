@@ -1,11 +1,11 @@
-package registration
+package auth
 
 import (
 	"testing"
 )
 
 func TestValidRequest(t *testing.T) {
-	r := Request{"+71234567890", "Ru"}
+	r := Request{"+73011234567", "Ru"}
 	err := r.Validate()
 	if err != nil {
 		t.Error("Invalid request phone number")

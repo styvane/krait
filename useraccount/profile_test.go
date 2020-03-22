@@ -1,9 +1,9 @@
-package registration
+package useraccount
 
 import (
 	"testing"
 
-	"github.com/nyaruka/phonenumbers"
+	"github.com/ttacon/libphonenumber"
 )
 
 func TestCreateNewUserProfile(t *testing.T) {
@@ -22,7 +22,7 @@ func TestCheckValidProfile(t *testing.T) {
 		"1918-01-01",
 		"xxx@example.com",
 		passport,
-		phonenumbers.GetExampleNumber("RU"),
+		libphonenumber.GetExampleNumber("RU"),
 	}
 	if err := p.Validate(); err != nil {
 		t.Error("Invalid profile information")

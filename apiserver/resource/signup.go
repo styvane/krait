@@ -11,24 +11,67 @@ import (
 // Inititate registration for new user
 //
 // responses:
-//   200: SignUpResponse
-//   400: SignUpResponse
+//   200: okResponseWrapper
+//   400: badRequestResponseWrapper
+//   422: unprocessableEntityResponseWrapper
 //
+
 // swagger:response
-type SignUpResponse struct {
+type okResponseWrapper struct {
 	// in: body
 	Body struct {
 		// Response content
 		// Required: true
-		Message string
+		Message string `json:"message"`
 
 		// The HTTP status code
 		// Required: true
-		Code int
+		// Example: 200
+		Code int `json:"code"`
 
 		// HTTP status text
 		// Required: true
-		CodeName string
+		// Example: OK
+		CodeName string `json:"codeName"`
+	}
+}
+
+// swagger:response
+type badRequestResponseWrapper struct {
+	// in: body
+	Body struct {
+		// Response content
+		// Required: true
+		Message string `json:"message"`
+
+		// The HTTP status code
+		// Required: true
+		// Example: 400
+		Code int `json:"code"`
+
+		// HTTP status text
+		// Required: true
+		// Example: Bad Request
+		CodeName string `json:"codeName"`
+	}
+}
+
+// swagger:response
+type unprocessableEntityResponseWrapper struct {
+	// in: body
+	Body struct {
+		// Response content
+		// Required: true
+		Message string `json:"message"`
+		// The HTTP status code
+		// Required: true
+		// Example: 422
+		Code int `json:"code"`
+
+		// HTTP status text
+		// Required: true
+		// Example: Unprocessable Entity
+		CodeName string `json:"codeName"`
 	}
 }
 

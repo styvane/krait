@@ -1,4 +1,4 @@
-package registration
+package useraccount
 
 // Userservice defines the interface type for the user
 type UserService interface {
