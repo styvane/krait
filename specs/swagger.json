@@ -1,0 +1,152 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Krait API Documentation",
+    "title": "Krait API",
+    "contact": {
+      "name": "Styvane Soukossi",
+      "email": "mstyvane@gmail.com"
+    },
+    "version": "0.0.0"
+  },
+  "basePath": "/v1",
+  "paths": {
+    "/signup": {
+      "post": {
+        "description": "Inititate registration for new user",
+        "operationId": "Signup",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "PhoneNumber",
+            "description": "Phone number",
+            "name": "phoneNumber",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "CountryCode",
+            "description": "Country code",
+            "name": "countryCode",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/okResponseWrapper"
+          },
+          "400": {
+            "$ref": "#/responses/badRequestResponseWrapper"
+          },
+          "422": {
+            "$ref": "#/responses/unprocessableEntityResponseWrapper"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "badRequestResponseWrapper": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "message",
+          "code",
+          "codeName"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code",
+            "example": 400
+          },
+          "codeName": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "CodeName",
+            "example": "Bad Request"
+          },
+          "message": {
+            "description": "Response content",
+            "type": "string",
+            "x-go-name": "Message"
+          }
+        }
+      }
+    },
+    "okResponseWrapper": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "message",
+          "code",
+          "codeName"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code",
+            "example": 200
+          },
+          "codeName": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "CodeName",
+            "example": "OK"
+          },
+          "message": {
+            "description": "Response content",
+            "type": "string",
+            "x-go-name": "Message"
+          }
+        }
+      }
+    },
+    "unprocessableEntityResponseWrapper": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "message",
+          "code",
+          "codeName"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code",
+            "example": 422
+          },
+          "codeName": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "CodeName",
+            "example": "Unprocessable Entity"
+          },
+          "message": {
+            "description": "Response content",
+            "type": "string",
+            "x-go-name": "Message"
+          }
+        }
+      }
+    }
+  }
+}
