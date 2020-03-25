@@ -35,7 +35,10 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.krait.toml)")
+	viper.WatchConfig()
+
+	pf := rootCmd.PersistentFlags()
+	pf.StringVar(&cfgFile, "config", "", "config file (default is $HOME/.krait.toml)")
 
 }
 

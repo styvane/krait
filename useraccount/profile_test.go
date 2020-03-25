@@ -6,13 +6,6 @@ import (
 	"github.com/ttacon/libphonenumber"
 )
 
-func TestCreateNewUserProfile(t *testing.T) {
-	_, err := NewProfile()
-	if err != nil {
-		t.Error("Cannot create profile")
-	}
-}
-
 func TestCheckValidProfile(t *testing.T) {
 	passport := &Passport{"s555051", "2020-01-01", "2020-01-01", "Russia"}
 	p := &Profile{

@@ -7,10 +7,12 @@ import (
 	"testing"
 
 	"github.com/hutsharing/krait/apiserver"
+	"github.com/hutsharing/krait/config"
 )
 
 func TestInitiateRegistrationHandle(t *testing.T) {
-	s := apiserver.NewServer()
+	c := &config.Config{}
+	s := apiserver.NewServer(c)
 	srv := httptest.NewServer(InitiateSignUpHandle(s))
 	defer srv.Close()
 

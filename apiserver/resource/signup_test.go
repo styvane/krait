@@ -9,10 +9,12 @@ import (
 
 	"github.com/hutsharing/krait/apiserver"
 	"github.com/hutsharing/krait/apiserver/handler"
+	"github.com/hutsharing/krait/config"
 )
 
 func TestRoutingInitiateSignUp(t *testing.T) {
-	s := apiserver.NewServer()
+	c := &config.Config{}
+	s := apiserver.NewServer(c)
 	srv := httptest.NewServer(handler.InitiateSignUpHandle(s))
 	defer srv.Close()
 	data := []struct {

@@ -6,10 +6,10 @@ import (
 	"github.com/hutsharing/krait/config"
 )
 
-func TestGenerateToken(t *testing.T) {
-	cfg := &config.Config{}
+func TestNewToken(t *testing.T) {
+	c := &config.JWT{}
 
-	_, err := GenerateToken(cfg)
+	_, err := NewToken(c)
 	if err != nil {
 		t.Errorf("Unable to generate token: %v", err)
 	}
@@ -18,18 +18,20 @@ func TestGenerateToken(t *testing.T) {
 
 func TestDecodeToken(t *testing.T) {
 	var input string
-	cfg := &config.Config{}
-	_, err := DecodeToken(input, cfg)
+	c := &config.JWT{}
+	_, err := DecodeToken(input, c)
 	if err != nil {
 		t.Errorf("Unable to decode token: %v", err)
 	}
 }
 
 func TestRevokeToken(t *testing.T) {
+
 	RevokeToken()
 
 }
 
 func TestIsValidToken(t *testing.T) {
-	IsValidToken
+	tok := &Token{}
+	tok.IsValid()
 }

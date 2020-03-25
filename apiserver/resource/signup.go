@@ -7,7 +7,7 @@ import (
 	"github.com/hutsharing/krait/apiserver/handler"
 )
 
-// swagger:route POST /signup Signup
+// swagger:route POST /signup SignUp
 // Inititate registration for new user
 //
 // responses:
@@ -15,7 +15,6 @@ import (
 //   400: badRequestResponseWrapper
 //   422: unprocessableEntityResponseWrapper
 //
-
 // swagger:response
 type okResponseWrapper struct {
 	// in: body

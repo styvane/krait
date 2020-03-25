@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-func TestValidRequest(t *testing.T) {
-	r := Request{"+73011234567", "Ru"}
+func TestValidSignUpRequest(t *testing.T) {
+	r := SignUpRequest{"+73011234567", "Ru"}
 	err := r.Validate()
 	if err != nil {
 		t.Error("Invalid request phone number")

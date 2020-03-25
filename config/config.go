@@ -1,14 +1,28 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
 
-type Config struct {
-	JWTSecret []byte `json: "jwt.secret"`
-	JWTIssuer string `json: "jwt.issuer"`
+	"github.com/spf13/viper"
+)
+
+// JWT defines configuration data for JWT token
+type JWT struct {
+	Secret string
+	Issuer string
 }
 
-func Load(v *viper.Viper) *Config {
+// Application configuration informations
+type Config struct {
+	JWT
+	Port uint
+	Host string
+}
+
+// Load create a configuration from a viper instance
+func Load(v *viper.Viper) (*Config, error) {
 	c := &Config{}
-	v.Unmarshal(c)
-	return c
+	err := v.Unmarshal(c)
+	fmt.Println(c)
+	return c, err
 }

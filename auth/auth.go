@@ -6,10 +6,21 @@ import (
 )
 
 // LoginRequest describes the request posted to login.
+// swagger:parameters Login
 type LoginRequest struct {
+	// in: body
+
+	// Phone number
+	// Required: true
 	PhoneNumber string `json:"phoneNumber" validate:"required"`
+
+	// Country code
+	// Required: true
 	CountryCode string `json:"countryCode" validate:"required"`
-	Password    string `json:"password" validate:"required"`
+
+	// Password
+	// Required: true
+	Password string `json:"password" validate:"required"`
 }
 
 // Validate validates LoginRequest.

@@ -3,6 +3,7 @@ package apiserver
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -24,8 +25,8 @@ type Server struct {
 }
 
 // create a new Server
-func NewServer() *Server {
-	return &Server{Router: mux.NewRouter()}
+func NewServer(c *config.Config) *Server {
+	return &Server{Router: mux.NewRouter(), Config: c}
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -34,12 +35,18 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // start HTTP Server
 func (s *Server) Start() {
-	srv := &http.Server{Addr: ":8080", Handler: s}
+	addr := fmt.Sprintf("%s:%d", s.Config.Host, s.Config.Port)
+	srv := &http.Server{
+		Addr:         addr,
+		Handler:      s,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
 	go func() {
-		log.Println("Starting Server on port 8080")
+		log.Printf("Starting Server on port %d\n", s.Config.Port)
 		err := srv.ListenAndServe()
 		if err != nil {
-			log.Println("Exiting Server...")
+			log.Printf("Exiting Server due to %v", err)
 			os.Exit(1)
 		}
 

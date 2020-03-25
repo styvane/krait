@@ -24,6 +24,12 @@ type Profile struct {
 	PhoneNumber *libphonenumber.PhoneNumber `json:"phoneNumber" validate:"required"`
 }
 
+// New create a new profile
+func New() *Profile {
+	p := &Profile{}
+	return p
+}
+
 // Validate validates Profile.
 // It returns nil if the struct is valid or the error if the struct is invalid.
 func (p *Profile) Validate() error {

@@ -21,10 +21,53 @@
   },
   "basePath": "/v1",
   "paths": {
+    "/login": {
+      "post": {
+        "description": "Login user",
+        "operationId": "Login",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "PhoneNumber",
+            "description": "Phone number",
+            "name": "phoneNumber",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "CountryCode",
+            "description": "Country code",
+            "name": "countryCode",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Password",
+            "description": "Password",
+            "name": "password",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/okloginResponseWrapper"
+          },
+          "400": {
+            "$ref": "#/responses/badLoginResponseWrapper"
+          },
+          "422": {
+            "$ref": "#/responses/unprocessableLoginResponseWrapper"
+          }
+        }
+      }
+    },
     "/signup": {
       "post": {
         "description": "Inititate registration for new user",
-        "operationId": "Signup",
+        "operationId": "SignUp",
         "parameters": [
           {
             "type": "string",
@@ -58,6 +101,36 @@
     }
   },
   "responses": {
+    "badLoginResponseWrapper": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "key",
+          "code",
+          "codeName"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code",
+            "example": 400
+          },
+          "codeName": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "CodeName",
+            "example": "Bad Request"
+          },
+          "key": {
+            "description": "Response content",
+            "type": "string",
+            "x-go-name": "Key"
+          }
+        }
+      }
+    },
     "badRequestResponseWrapper": {
       "schema": {
         "type": "object",
@@ -118,6 +191,36 @@
         }
       }
     },
+    "okloginResponseWrapper": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "key",
+          "code",
+          "codeName"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code",
+            "example": 200
+          },
+          "codeName": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "CodeName",
+            "example": "OK"
+          },
+          "key": {
+            "description": "Response content",
+            "type": "string",
+            "x-go-name": "Key"
+          }
+        }
+      }
+    },
     "unprocessableEntityResponseWrapper": {
       "schema": {
         "type": "object",
@@ -144,6 +247,36 @@
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message"
+          }
+        }
+      }
+    },
+    "unprocessableLoginResponseWrapper": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "key",
+          "code",
+          "codeName"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code",
+            "example": 422
+          },
+          "codeName": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "CodeName",
+            "example": "Unprocessable Entity"
+          },
+          "key": {
+            "description": "Response content",
+            "type": "string",
+            "x-go-name": "Key"
           }
         }
       }

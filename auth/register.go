@@ -6,7 +6,7 @@ import (
 )
 
 // SignUpRequest describes the request posted to initialize sign up.
-// swagger:parameters Signup
+// swagger:parameters SignUp
 type SignUpRequest struct {
 	// in: body
 
