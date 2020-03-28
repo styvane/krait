@@ -3,11 +3,11 @@ package handler
 import (
 	"net/http"
 
-	"github.com/hutsharing/krait/apiserver"
 	"github.com/hutsharing/krait/auth"
+	"github.com/hutsharing/krait/server"
 )
 
-func InitiateSignUpHandle(s *apiserver.Server) http.HandlerFunc {
+func LoginHandle(s *server.Server) http.HandlerFunc {
 
 	type response struct {
 		Message  string `json:"message"`
@@ -16,30 +16,37 @@ func InitiateSignUpHandle(s *apiserver.Server) http.HandlerFunc {
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req auth.SignUpRequest
+		var req auth.LoginRequest
 
 		err := s.Decode(w, r, &req)
 		w.Header().Set("Content-Type", "application/json")
 		if err != nil {
 			w.WriteHeader(http.StatusUnprocessableEntity)
 			resp := &response{
-				"Cannot process request",
+				"Invalid JSON structure",
 				http.StatusUnprocessableEntity,
 				http.StatusText(http.StatusUnprocessableEntity),
 			}
 			s.Encode(w, resp)
+			return
 		}
 
 		if err = req.Validate(); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			resp := &response{
-				"Invalid number and/or country code",
+				"Invalid payload",
 				http.StatusBadRequest,
 				http.StatusText(http.StatusBadRequest),
 			}
 			s.Encode(w, resp)
 			return
 		}
-		s.Encode(w, &response{"registration initiated", http.StatusOK, http.StatusText(http.StatusOK)})
+
+		resp := &response{
+			"Verification code sent",
+			http.StatusOK,
+			http.StatusText(http.StatusOK),
+		}
+		s.Encode(w, resp)
 	}
 }

@@ -3,24 +3,25 @@ package resource
 import (
 	"net/http"
 
-	"github.com/hutsharing/krait/apiserver"
-	"github.com/hutsharing/krait/apiserver/handler"
+	"github.com/hutsharing/krait/handler"
+	"github.com/hutsharing/krait/server"
 )
 
-// swagger:route POST /signup SignUp
-// Inititate registration for new user
+// swagger:route POST /login Login
+// Login user
 //
 // responses:
-//   200: okResponseWrapper
-//   400: badRequestResponseWrapper
-//   422: unprocessableEntityResponseWrapper
+//   200: okloginResponseWrapper
+//   400: badLoginResponseWrapper
+//   422: unprocessableLoginResponseWrapper
 //
 // swagger:response
-type okResponseWrapper struct {
+type okloginResponseWrapper struct {
 	// in: body
 	Body struct {
 		// Response content
 		// Required: true
+		// Example: Verification code sent
 		Message string `json:"message"`
 
 		// The HTTP status code
@@ -36,11 +37,12 @@ type okResponseWrapper struct {
 }
 
 // swagger:response
-type badRequestResponseWrapper struct {
+type badLoginResponseWrapper struct {
 	// in: body
 	Body struct {
 		// Response content
 		// Required: true
+		// Example: Invalid Data type
 		Message string `json:"message"`
 
 		// The HTTP status code
@@ -56,11 +58,12 @@ type badRequestResponseWrapper struct {
 }
 
 // swagger:response
-type unprocessableEntityResponseWrapper struct {
+type unprocessableLoginResponseWrapper struct {
 	// in: body
 	Body struct {
 		// Response content
 		// Required: true
+		// Example: Invalid payload
 		Message string `json:"message"`
 		// The HTTP status code
 		// Required: true
@@ -74,7 +77,7 @@ type unprocessableEntityResponseWrapper struct {
 	}
 }
 
-// RegistrationRoute register registration handler
-func SignUpRoute(s *apiserver.Server) {
-	s.Router.HandleFunc("/signup", handler.InitiateSignUpHandle(s)).Methods(http.MethodPost)
+// LoginRoute register authentication handler
+func LoginRoute(s *server.Server) {
+	s.Router.HandleFunc("/login", handler.LoginHandle(s)).Methods(http.MethodPost)
 }

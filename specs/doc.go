@@ -4,7 +4,7 @@ Krait API Documentation
 
 Schemes: http, https
 BasePath: /v1
-Version: 0.0.0
+Version: v1
 Contact: Styvane Soukossi<mstyvane@gmail.com>
 
 Consumes:
@@ -15,4 +15,4 @@ Produces:
 
 swagger:meta
 */
-package apiserver
+package specs

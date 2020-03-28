@@ -1,10 +1,9 @@
-package apiserver
+package server
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/hutsharing/krait/config"
+	log "github.com/sirupsen/logrus"
 )
 
 type Validator interface {
@@ -22,13 +22,25 @@ type Validator interface {
 type Server struct {
 	Router *mux.Router
 	Config *config.Config
+	Log    *log.Logger
 }
 
 // create a new Server
-func NewServer(c *config.Config) *Server {
-	return &Server{Router: mux.NewRouter(), Config: c}
+func New(c *config.Config) *Server {
+	l := log.New()
+	l.SetFormatter(&log.TextFormatter{FullTimestamp: true})
+	m := mux.NewRouter()
+	return &Server{Router: m, Config: c, Log: l}
 }
 
+func NewTestServer() *Server {
+	l := log.New()
+	l.SetFormatter(&log.TextFormatter{FullTimestamp: true})
+	m := mux.NewRouter()
+	c := &config.Config{}
+	return &Server{Router: m, Config: c, Log: l}
+
+}
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.Router.ServeHTTP(w, r)
 }
@@ -43,10 +55,10 @@ func (s *Server) Start() {
 		ReadTimeout:  15 * time.Second,
 	}
 	go func() {
-		log.Printf("Starting Server on port %d\n", s.Config.Port)
+		s.Log.Printf("Starting Server on port %d\n", s.Config.Port)
 		err := srv.ListenAndServe()
 		if err != nil {
-			log.Printf("Exiting Server due to %v", err)
+			s.Log.Printf("Exiting Server due to %v", err)
 			os.Exit(1)
 		}
 

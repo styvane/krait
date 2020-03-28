@@ -13,9 +13,8 @@ func PhoneNumber(phoneNumber, countryCode string) error {
 	if err != nil {
 		return err
 	}
-	c := int(p.GetCountryCode())
-	countryCode = strings.ToUpper(countryCode)
-	if !libphonenumber.IsValidNumber(p) || libphonenumber.GetRegionCodeForCountryCode(c) != countryCode {
+	c := strings.ToUpper(countryCode)
+	if !libphonenumber.IsValidNumberForRegion(p, c) {
 		return errors.New("Invalid phone number")
 	}
 	return nil

@@ -3,9 +3,9 @@ package cmd
 import (
 	"os"
 
-	"github.com/hutsharing/krait/apiserver"
-	"github.com/hutsharing/krait/apiserver/resource"
 	"github.com/hutsharing/krait/config"
+	"github.com/hutsharing/krait/resource"
+	"github.com/hutsharing/krait/server"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -28,7 +28,7 @@ func init() {
 	serveCmd.Flags().UintP("port", "p", 9000, "Port to run server on.")
 
 	// Add host name flag
-	serveCmd.Flags().String("host", "127.0.0.1", "Listen on localhost")
+	serveCmd.Flags().String("host", "127.0.0.1", "Allowed host")
 
 	// Bind the cobra flags to our config
 	viper.GetViper().BindPFlags(serveCmd.Flags())
@@ -36,13 +36,12 @@ func init() {
 }
 
 func serve(cmd *cobra.Command, args []string) {
-
 	v := viper.GetViper()
 	cfg, err := config.Load(v)
 	if err != nil {
 		os.Exit(1)
 	}
-	srv := apiserver.NewServer(cfg)
+	srv := server.New(cfg)
 	resource.Route(srv)
 	srv.Start()
 }

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/cobra"
-
 	homedir "github.com/mitchellh/go-homedir"
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
@@ -35,8 +35,6 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	viper.WatchConfig()
-
 	pf := rootCmd.PersistentFlags()
 	pf.StringVar(&cfgFile, "config", "", "config file (default is $HOME/.krait.toml)")
 
@@ -58,13 +56,15 @@ func initConfig() {
 		// Search config in home directory with name ".krait" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".krait")
+
 	}
+	viper.WatchConfig()
 
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	if err := viper.ReadInConfig(); err != nil {
+		log.Errorf("Failed to read config file: %s", cfgFile)
 	}
 
 }

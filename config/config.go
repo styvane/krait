@@ -1,8 +1,6 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
 
@@ -23,6 +21,5 @@ type Config struct {
 func Load(v *viper.Viper) (*Config, error) {
 	c := &Config{}
 	err := v.Unmarshal(c)
-	fmt.Println(c)
 	return c, err
 }

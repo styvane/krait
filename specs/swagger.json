@@ -17,7 +17,7 @@
       "name": "Styvane Soukossi",
       "email": "mstyvane@gmail.com"
     },
-    "version": "0.0.0"
+    "version": "v1"
   },
   "basePath": "/v1",
   "paths": {
@@ -105,7 +105,7 @@
       "schema": {
         "type": "object",
         "required": [
-          "key",
+          "message",
           "code",
           "codeName"
         ],
@@ -123,10 +123,11 @@
             "x-go-name": "CodeName",
             "example": "Bad Request"
           },
-          "key": {
+          "message": {
             "description": "Response content",
             "type": "string",
-            "x-go-name": "Key"
+            "x-go-name": "Message",
+            "example": "Invalid Data type"
           }
         }
       }
@@ -195,7 +196,7 @@
       "schema": {
         "type": "object",
         "required": [
-          "key",
+          "message",
           "code",
           "codeName"
         ],
@@ -213,10 +214,11 @@
             "x-go-name": "CodeName",
             "example": "OK"
           },
-          "key": {
+          "message": {
             "description": "Response content",
             "type": "string",
-            "x-go-name": "Key"
+            "x-go-name": "Message",
+            "example": "Verification code sent"
           }
         }
       }
@@ -255,7 +257,7 @@
       "schema": {
         "type": "object",
         "required": [
-          "key",
+          "message",
           "code",
           "codeName"
         ],
@@ -273,10 +275,11 @@
             "x-go-name": "CodeName",
             "example": "Unprocessable Entity"
           },
-          "key": {
+          "message": {
             "description": "Response content",
             "type": "string",
-            "x-go-name": "Key"
+            "x-go-name": "Message",
+            "example": "Invalid payload"
           }
         }
       }

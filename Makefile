@@ -5,4 +5,4 @@
 	GO111MODULE=off swagger generate spec -o ./specs/swagger.json --scan-models
 
 krait: .swagger
-	go install -ldflags "-X 'github.com/hutsharing/krait/cmd.Version=0.0.0'"
+	go install -ldflags "-X 'github.com/hutsharing/krait/cmd.Version=0.0.9'"
