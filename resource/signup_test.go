@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hutsharing/krait/handler"
+	"github.com/hutsharing/krait/handlers"
 	"github.com/hutsharing/krait/server"
 	"github.com/stretchr/testify/assert"
 )
@@ -15,7 +15,7 @@ import (
 func TestRoutingInitiateSignUp(t *testing.T) {
 
 	s := server.NewTestServer()
-	srv := httptest.NewServer(handler.InitiateSignUpHandle(s))
+	srv := httptest.NewServer(handlers.InitiateSignUpHandle(s))
 	defer srv.Close()
 	tests := []struct {
 		payload string

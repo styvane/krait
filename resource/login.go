@@ -3,7 +3,7 @@ package resource
 import (
 	"net/http"
 
-	"github.com/hutsharing/krait/handler"
+	"github.com/hutsharing/krait/handlers"
 	"github.com/hutsharing/krait/server"
 )
 
@@ -77,7 +77,7 @@ type unprocessableLoginResponseWrapper struct {
 	}
 }
 
-// LoginRoute register authentication handler
+// LoginRoute register authentication handlers
 func LoginRoute(s *server.Server) {
-	s.Router.HandleFunc("/login", handler.LoginHandle(s)).Methods(http.MethodPost)
+	s.Router.HandleFunc("/login", handlers.LoginHandle(s)).Methods(http.MethodPost)
 }

@@ -1,11 +1,41 @@
-package handler
+package handlers
 
 import (
 	"net/http"
 
-	"github.com/hutsharing/krait/auth"
+	"github.com/go-playground/validator/v10"
 	"github.com/hutsharing/krait/server"
+	"github.com/hutsharing/krait/validation"
 )
+
+// LoginRequest describes the request posted to login.
+// swagger:parameters Login
+type LoginRequest struct {
+	// in: body
+
+	// Phone number
+	// Required: true
+	PhoneNumber string `json:"phoneNumber" validate:"required"`
+
+	// Country code
+	// Required: true
+	CountryCode string `json:"countryCode" validate:"required"`
+
+	// Password
+	// Required: true
+	Password string `json:"password" validate:"required"`
+}
+
+// Validate validates LoginRequest.
+// It returns nil if the struct is valid or the error if the struct is invalid
+func (l *LoginRequest) Validate() error {
+	v := validator.New()
+	err := v.Struct(l)
+	if err != nil {
+		return err
+	}
+	return validation.PhoneNumber(l.PhoneNumber, l.CountryCode)
+}
 
 func LoginHandle(s *server.Server) http.HandlerFunc {
 
@@ -16,7 +46,7 @@ func LoginHandle(s *server.Server) http.HandlerFunc {
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req auth.LoginRequest
+		var req LoginRequest
 
 		err := s.Decode(w, r, &req)
 		w.Header().Set("Content-Type", "application/json")

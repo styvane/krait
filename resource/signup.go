@@ -3,7 +3,7 @@ package resource
 import (
 	"net/http"
 
-	"github.com/hutsharing/krait/handler"
+	"github.com/hutsharing/krait/handlers"
 	"github.com/hutsharing/krait/server"
 )
 
@@ -74,7 +74,7 @@ type unprocessableEntityResponseWrapper struct {
 	}
 }
 
-// RegistrationRoute register registration handler
+// RegistrationRoute register registration handlers
 func SignUpRoute(s *server.Server) {
-	s.Router.HandleFunc("/signup", handler.InitiateSignUpHandle(s)).Methods(http.MethodPost)
+	s.Router.HandleFunc("/signup", handlers.InitiateSignUpHandle(s)).Methods(http.MethodPost)
 }
