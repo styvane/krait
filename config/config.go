@@ -10,11 +10,18 @@ type JWT struct {
 	Issuer string
 }
 
+// TWILIO defines twilio configuration data
+type Twilio struct {
+	SID   string
+	Token string
+}
+
 // Application configuration informations
 type Config struct {
-	JWT
 	Port uint
 	Host string
+	JWT
+	Twilio Twilio
 }
 
 // Load create a configuration from a viper instance
