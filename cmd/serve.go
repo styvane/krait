@@ -37,11 +37,13 @@ func init() {
 
 func serve(cmd *cobra.Command, args []string) {
 	v := viper.GetViper()
+
 	cfg, err := config.Load(v)
 	if err != nil {
 		os.Exit(1)
 	}
+
 	srv := server.New(cfg)
-	resource.Route(srv.Router)
+	resource.Init(srv.Router)
 	srv.Start()
 }

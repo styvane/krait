@@ -1,13 +1,11 @@
 package resource
 
 import (
-	"net/http"
-
 	"github.com/gorilla/mux"
 	"github.com/hutsharing/krait/handlers"
 )
 
-// swagger:route POST /signup SignUp
+// swagger:route POST /auth/signup SignUp
 // Inititate registration for new user
 //
 // responses:
@@ -31,7 +29,7 @@ type okResponseWrapper struct {
 		// HTTP status text
 		// Required: true
 		// Example: OK
-		CodeName string `json:"codeName"`
+		Reason string `json:"reason"`
 	}
 }
 
@@ -51,7 +49,7 @@ type badRequestResponseWrapper struct {
 		// HTTP status text
 		// Required: true
 		// Example: Bad Request
-		CodeName string `json:"codeName"`
+		Reason string `json:"reason"`
 	}
 }
 
@@ -70,11 +68,11 @@ type unprocessableEntityResponseWrapper struct {
 		// HTTP status text
 		// Required: true
 		// Example: Unprocessable Entity
-		CodeName string `json:"codeName"`
+		Reason string `json:"reason"`
 	}
 }
 
-// RegistrationRoute register registration handlers
-func SignUpRoute(r *mux.Router) {
-	r.HandleFunc("/signup", handlers.InitiateSignUpHandle()).Methods(http.MethodPost)
+// signUpRouting register registration handlers
+func signUpRouting(r *mux.Router) {
+	r.HandleFunc("/signup", handlers.InitiateSignUpHandle())
 }

@@ -33,6 +33,7 @@ func DocHandle() http.Handler {
 // decode incoming request body and return an error value
 func decode(w http.ResponseWriter, r *http.Request, v interface{}) error {
 	d := json.NewDecoder(r.Body)
+	defer r.Body.Close()
 	return d.Decode(v)
 }
 

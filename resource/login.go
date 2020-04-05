@@ -1,13 +1,11 @@
 package resource
 
 import (
-	"net/http"
-
 	"github.com/gorilla/mux"
 	"github.com/hutsharing/krait/handlers"
 )
 
-// swagger:route POST /login Login
+// swagger:route POST /auth/login Login
 // Login user
 //
 // responses:
@@ -32,7 +30,7 @@ type okloginResponseWrapper struct {
 		// HTTP status text
 		// Required: true
 		// Example: OK
-		CodeName string `json:"codeName"`
+		Reason string `json:"reason"`
 	}
 }
 
@@ -53,7 +51,7 @@ type badLoginResponseWrapper struct {
 		// HTTP status text
 		// Required: true
 		// Example: Bad Request
-		CodeName string `json:"codeName"`
+		Reason string `json:"reason"`
 	}
 }
 
@@ -73,11 +71,11 @@ type unprocessableLoginResponseWrapper struct {
 		// HTTP status text
 		// Required: true
 		// Example: Unprocessable Entity
-		CodeName string `json:"codeName"`
+		Reason string `json:"reason"`
 	}
 }
 
-// LoginRoute register authentication handlers
-func LoginRoute(r *mux.Router) {
-	r.HandleFunc("/login", handlers.LoginHandle()).Methods(http.MethodPost)
+// loginRouting register authentication handlers
+func loginRoute(r *mux.Router) {
+	r.HandleFunc("/login", handlers.LoginHandle())
 }

@@ -37,11 +37,10 @@ func (l *LoginRequest) Validate() error {
 }
 
 func LoginHandle() http.HandlerFunc {
-
 	type response struct {
-		Message  string `json:"message"`
-		Code     int    `json:"code"`
-		CodeName string `json:"codeName"`
+		Message string `json:"message"`
+		Code    int    `json:"code"`
+		Reason  string `json:"reason"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {

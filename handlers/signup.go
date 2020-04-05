@@ -7,7 +7,7 @@ import (
 	"github.com/hutsharing/krait/validation"
 )
 
-// SignUpRequest describes the request posted to initialize sign up.
+// signUpRequest describes the request posted to initialize sign up.
 // swagger:parameters SignUp
 type SignUpRequest struct {
 	// in: body

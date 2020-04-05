@@ -21,7 +21,7 @@
   },
   "basePath": "/v1",
   "paths": {
-    "/login": {
+    "/auth/login": {
       "post": {
         "description": "Login user",
         "operationId": "Login",
@@ -64,7 +64,7 @@
         }
       }
     },
-    "/signup": {
+    "/auth/signup": {
       "post": {
         "description": "Inititate registration for new user",
         "operationId": "SignUp",
@@ -107,7 +107,7 @@
         "required": [
           "message",
           "code",
-          "codeName"
+          "reason"
         ],
         "properties": {
           "code": {
@@ -117,17 +117,17 @@
             "x-go-name": "Code",
             "example": 400
           },
-          "codeName": {
-            "description": "HTTP status text",
-            "type": "string",
-            "x-go-name": "CodeName",
-            "example": "Bad Request"
-          },
           "message": {
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message",
             "example": "Invalid Data type"
+          },
+          "reason": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "Reason",
+            "example": "Bad Request"
           }
         }
       }
@@ -138,7 +138,7 @@
         "required": [
           "message",
           "code",
-          "codeName"
+          "reason"
         ],
         "properties": {
           "code": {
@@ -148,16 +148,16 @@
             "x-go-name": "Code",
             "example": 400
           },
-          "codeName": {
-            "description": "HTTP status text",
-            "type": "string",
-            "x-go-name": "CodeName",
-            "example": "Bad Request"
-          },
           "message": {
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message"
+          },
+          "reason": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "Reason",
+            "example": "Bad Request"
           }
         }
       }
@@ -168,7 +168,7 @@
         "required": [
           "message",
           "code",
-          "codeName"
+          "reason"
         ],
         "properties": {
           "code": {
@@ -178,16 +178,16 @@
             "x-go-name": "Code",
             "example": 200
           },
-          "codeName": {
-            "description": "HTTP status text",
-            "type": "string",
-            "x-go-name": "CodeName",
-            "example": "OK"
-          },
           "message": {
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message"
+          },
+          "reason": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "Reason",
+            "example": "OK"
           }
         }
       }
@@ -198,7 +198,7 @@
         "required": [
           "message",
           "code",
-          "codeName"
+          "reason"
         ],
         "properties": {
           "code": {
@@ -208,17 +208,17 @@
             "x-go-name": "Code",
             "example": 200
           },
-          "codeName": {
-            "description": "HTTP status text",
-            "type": "string",
-            "x-go-name": "CodeName",
-            "example": "OK"
-          },
           "message": {
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message",
             "example": "Verification code sent"
+          },
+          "reason": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "Reason",
+            "example": "OK"
           }
         }
       }
@@ -229,7 +229,7 @@
         "required": [
           "message",
           "code",
-          "codeName"
+          "reason"
         ],
         "properties": {
           "code": {
@@ -239,16 +239,16 @@
             "x-go-name": "Code",
             "example": 422
           },
-          "codeName": {
-            "description": "HTTP status text",
-            "type": "string",
-            "x-go-name": "CodeName",
-            "example": "Unprocessable Entity"
-          },
           "message": {
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message"
+          },
+          "reason": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "Reason",
+            "example": "Unprocessable Entity"
           }
         }
       }
@@ -259,7 +259,7 @@
         "required": [
           "message",
           "code",
-          "codeName"
+          "reason"
         ],
         "properties": {
           "code": {
@@ -269,17 +269,17 @@
             "x-go-name": "Code",
             "example": 422
           },
-          "codeName": {
-            "description": "HTTP status text",
-            "type": "string",
-            "x-go-name": "CodeName",
-            "example": "Unprocessable Entity"
-          },
           "message": {
             "description": "Response content",
             "type": "string",
             "x-go-name": "Message",
             "example": "Invalid payload"
+          },
+          "reason": {
+            "description": "HTTP status text",
+            "type": "string",
+            "x-go-name": "Reason",
+            "example": "Unprocessable Entity"
           }
         }
       }

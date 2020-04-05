@@ -2,30 +2,33 @@ package resource
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
-	"github.com/hutsharing/krait/handlers"
+	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestLoginRoute(t *testing.T) {
-	srv := httptest.NewServer(handlers.LoginHandle())
+	r := mux.NewRouter()
+	loginRoute(r)
+	srv := httptest.NewServer(r)
 	defer srv.Close()
 	tests := []struct {
 		payload string
-		status  int
+		body    string
 		name    string
 	}{
 		{
 			`{"phoneNumber": "+48575557175", "countryCode": "PL", "password": "xxxxxxxx"}`,
-			200,
+			"verification",
 			"Ok",
 		},
 		{
 			`{"phoneNumber": "+7111234567", "countryCode": "RU", "password": "xxxxxxxx"}`,
-			400,
+			"invalid",
 			"Nok",
 		},
 	}
@@ -33,14 +36,21 @@ func TestLoginRoute(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			r := strings.NewReader(test.payload)
+
 			resp, _ := srv.Client().Post(fmt.Sprintf("%s/login", srv.URL), "application/json", r)
-			assert.Equalf(
+			body, err := ioutil.ReadAll(resp.Body)
+			defer resp.Body.Close()
+
+			assert.Nilf(t, err, "could not read response: %v", err)
+
+			ss := strings.ToLower(string(body))
+			assert.Containsf(
 				t,
-				test.status,
-				test.status,
-				"Expected status code: %v; found: %v",
-				test.status,
-				resp.StatusCode,
+				ss,
+				test.body,
+				"Expected %v in body; found: %v",
+				test.body,
+				ss,
 			)
 		})
 	}

@@ -2,32 +2,33 @@ package resource
 
 import (
 	"fmt"
-	"net/http"
+	"io/ioutil"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
-	"github.com/hutsharing/krait/handlers"
+	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRoutingInitiateSignUp(t *testing.T) {
-
-	srv := httptest.NewServer(handlers.InitiateSignUpHandle())
+	r := mux.NewRouter()
+	signUpRouting(r)
+	srv := httptest.NewServer(r)
 	defer srv.Close()
 	tests := []struct {
 		payload string
-		status  int
+		body    string
 		name    string
 	}{
 		{
 			`{"phoneNumber": "+73011234567", "countryCode":"ru"}`,
-			200,
+			"verification",
 			"correct payload",
 		},
 		{
 			`{"phoneNumber": "+61234567890", "countryCode":"ru"}`,
-			400,
+			"invalid",
 			"invalid phone number",
 		},
 	}
@@ -36,17 +37,25 @@ func TestRoutingInitiateSignUp(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			reader := strings.NewReader(test.payload)
 
-			r, _ := http.Post(fmt.Sprintf("%s/signup", srv.URL), "application/json", reader)
-			assert.Equalf(
+			resp, _ := srv.Client().Post(fmt.Sprintf("%s/signup", srv.URL), "application/json", reader)
+
+			body, err := ioutil.ReadAll(resp.Body)
+			defer resp.Body.Close()
+
+			assert.Nilf(t, err, "could not read response: %v", err)
+
+			ss := strings.ToLower(string(body))
+
+			assert.Containsf(
 				t,
-				test.status,
-				r.StatusCode,
-				"Invalid data; expected status code: %v found: %v",
-				test.status,
-				r.StatusCode,
+				ss,
+				test.body,
+				"Invalid data; expected %v in body; found: %v",
+				test.body,
+				ss,
 			)
 
-			ct := r.Header.Get("Content-Type")
+			ct := resp.Header.Get("Content-Type")
 			assert.Equalf(t, "application/json", ct, "Expected application/json found: %v", ct)
 
 		})
