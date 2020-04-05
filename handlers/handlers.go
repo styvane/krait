@@ -1,10 +1,10 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/hutsharing/krait/server"
 )
 
 type request struct {
@@ -19,13 +19,25 @@ type request struct {
 	CountryCode string `json:"countryCode" validate:"required"`
 }
 
-func SendVerificationCodeHandle(s *server.Server) http.HandlerFunc {
+func SendVerificationCodeHandle() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {}
 }
 
 // swagger documentation handler
-func DocHandle(s *server.Server) http.Handler {
+func DocHandle() http.Handler {
 	ops := middleware.RedocOpts{}
 	return middleware.Redoc(ops, nil)
+}
+
+// decode incoming request body and return an error value
+func decode(w http.ResponseWriter, r *http.Request, v interface{}) error {
+	d := json.NewDecoder(r.Body)
+	return d.Decode(v)
+}
+
+// encode response
+func encode(w http.ResponseWriter, v interface{}) error {
+	e := json.NewEncoder(w)
+	return e.Encode(v)
 }

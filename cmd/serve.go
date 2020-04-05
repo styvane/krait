@@ -42,6 +42,6 @@ func serve(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 	srv := server.New(cfg)
-	resource.Route(srv)
+	resource.Route(srv.Router)
 	srv.Start()
 }

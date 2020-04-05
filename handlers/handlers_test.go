@@ -4,13 +4,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/hutsharing/krait/server"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSendVerificationCodeHandle(t *testing.T) {
-	s := server.NewTestServer()
-	srv := httptest.NewServer(SendVerificationCodeHandle(s))
+	srv := httptest.NewServer(SendVerificationCodeHandle())
 	defer srv.Close()
 
 	tests := []struct {

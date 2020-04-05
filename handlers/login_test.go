@@ -6,7 +6,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hutsharing/krait/server"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -22,8 +21,7 @@ func TestCheckValidLoginRequest(t *testing.T) {
 }
 
 func TestLoginHandle(t *testing.T) {
-	s := server.NewTestServer()
-	srv := httptest.NewServer(LoginHandle(s))
+	srv := httptest.NewServer(LoginHandle())
 	defer srv.Close()
 	tests := []struct {
 		payload string

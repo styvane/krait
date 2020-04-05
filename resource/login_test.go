@@ -7,13 +7,11 @@ import (
 	"testing"
 
 	"github.com/hutsharing/krait/handlers"
-	"github.com/hutsharing/krait/server"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestLoginRoute(t *testing.T) {
-	s := server.NewTestServer()
-	srv := httptest.NewServer(handlers.LoginHandle(s))
+	srv := httptest.NewServer(handlers.LoginHandle())
 	defer srv.Close()
 	tests := []struct {
 		payload string

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/hutsharing/krait/server"
 	"github.com/hutsharing/krait/validation"
 )
 
@@ -37,7 +36,7 @@ func (l *LoginRequest) Validate() error {
 	return validation.PhoneNumber(l.PhoneNumber, l.CountryCode)
 }
 
-func LoginHandle(s *server.Server) http.HandlerFunc {
+func LoginHandle() http.HandlerFunc {
 
 	type response struct {
 		Message  string `json:"message"`
@@ -48,7 +47,7 @@ func LoginHandle(s *server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req LoginRequest
 
-		err := s.Decode(w, r, &req)
+		err := decode(w, r, &req)
 		w.Header().Set("Content-Type", "application/json")
 		if err != nil {
 			w.WriteHeader(http.StatusUnprocessableEntity)
@@ -57,7 +56,7 @@ func LoginHandle(s *server.Server) http.HandlerFunc {
 				http.StatusUnprocessableEntity,
 				http.StatusText(http.StatusUnprocessableEntity),
 			}
-			s.Encode(w, resp)
+			encode(w, resp)
 			return
 		}
 
@@ -68,7 +67,7 @@ func LoginHandle(s *server.Server) http.HandlerFunc {
 				http.StatusBadRequest,
 				http.StatusText(http.StatusBadRequest),
 			}
-			s.Encode(w, resp)
+			encode(w, resp)
 			return
 		}
 
@@ -77,6 +76,6 @@ func LoginHandle(s *server.Server) http.HandlerFunc {
 			http.StatusOK,
 			http.StatusText(http.StatusOK),
 		}
-		s.Encode(w, resp)
+		encode(w, resp)
 	}
 }

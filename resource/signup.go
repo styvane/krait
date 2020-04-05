@@ -3,8 +3,8 @@ package resource
 import (
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/hutsharing/krait/handlers"
-	"github.com/hutsharing/krait/server"
 )
 
 // swagger:route POST /signup SignUp
@@ -75,6 +75,6 @@ type unprocessableEntityResponseWrapper struct {
 }
 
 // RegistrationRoute register registration handlers
-func SignUpRoute(s *server.Server) {
-	s.Router.HandleFunc("/signup", handlers.InitiateSignUpHandle(s)).Methods(http.MethodPost)
+func SignUpRoute(r *mux.Router) {
+	r.HandleFunc("/signup", handlers.InitiateSignUpHandle()).Methods(http.MethodPost)
 }

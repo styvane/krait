@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/hutsharing/krait/server"
 	"github.com/hutsharing/krait/validation"
 )
 
@@ -33,18 +32,18 @@ func (r *SignUpRequest) Validate() error {
 	return validation.PhoneNumber(r.PhoneNumber, r.CountryCode)
 }
 
-func InitiateSignUpHandle(s *server.Server) http.HandlerFunc {
+func InitiateSignUpHandle() http.HandlerFunc {
 
 	type response struct {
-		Message  string `json:"message"`
-		Code     int    `json:"code"`
-		CodeName string `json:"codeName"`
+		Message string `json:"message"`
+		Code    int    `json:"code"`
+		Reason  string `json:"reason"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req SignUpRequest
 
-		err := s.Decode(w, r, &req)
+		err := decode(w, r, &req)
 		w.Header().Set("Content-Type", "application/json")
 		var resp *response
 		if err != nil {
@@ -64,14 +63,15 @@ func InitiateSignUpHandle(s *server.Server) http.HandlerFunc {
 			}
 		}
 		if resp != nil {
-			s.Encode(w, resp)
+			encode(w, resp)
 			return
+
 		}
 		resp = &response{
-			"registration initiated",
+			"registration initiated with SMS verification code",
 			http.StatusOK,
 			http.StatusText(http.StatusOK),
 		}
-		s.Encode(w, resp)
+		encode(w, resp)
 	}
 }

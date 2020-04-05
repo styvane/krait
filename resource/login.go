@@ -3,8 +3,8 @@ package resource
 import (
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/hutsharing/krait/handlers"
-	"github.com/hutsharing/krait/server"
 )
 
 // swagger:route POST /login Login
@@ -78,6 +78,6 @@ type unprocessableLoginResponseWrapper struct {
 }
 
 // LoginRoute register authentication handlers
-func LoginRoute(s *server.Server) {
-	s.Router.HandleFunc("/login", handlers.LoginHandle(s)).Methods(http.MethodPost)
+func LoginRoute(r *mux.Router) {
+	r.HandleFunc("/login", handlers.LoginHandle()).Methods(http.MethodPost)
 }

@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -33,14 +32,6 @@ func New(c *config.Config) *Server {
 	return &Server{Router: m, Config: c, Log: l}
 }
 
-func NewTestServer() *Server {
-	l := log.New()
-	l.SetFormatter(&log.TextFormatter{FullTimestamp: true})
-	m := mux.NewRouter()
-	c := &config.Config{}
-	return &Server{Router: m, Config: c, Log: l}
-
-}
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.Router.ServeHTTP(w, r)
 }
@@ -71,16 +62,4 @@ func (s *Server) Start() {
 	// graceful shutdown Server and allow 30 secs for ongoing operation to complete
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	srv.Shutdown(ctx)
-}
-
-// Decode incoming request body and return an error value
-func (s *Server) Decode(w http.ResponseWriter, r *http.Request, v interface{}) error {
-	d := json.NewDecoder(r.Body)
-	return d.Decode(v)
-}
-
-// Encode response
-func (s *Server) Encode(w http.ResponseWriter, v interface{}) error {
-	e := json.NewEncoder(w)
-	return e.Encode(v)
 }

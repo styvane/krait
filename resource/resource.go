@@ -3,13 +3,13 @@ package resource
 import (
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/hutsharing/krait/handlers"
-	"github.com/hutsharing/krait/server"
 )
 
 // Route register allow
-func Route(s *server.Server) {
-	SignUpRoute(s)
-	s.Router.Handle("/docs", handlers.DocHandle(s))
-	s.Router.Handle("/swagger.json", http.FileServer(http.Dir("./specs/")))
+func Route(r *mux.Router) {
+	SignUpRoute(r)
+	r.Handle("/docs", handlers.DocHandle())
+	r.Handle("/swagger.json", http.FileServer(http.Dir("./specs/")))
 }
