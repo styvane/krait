@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/hutsharing/krait/config"
@@ -40,7 +39,6 @@ func serve(cmd *cobra.Command, args []string) {
 	v := viper.GetViper()
 
 	cfg, err := config.Load(v)
-	fmt.Println(cfg)
 	if err != nil {
 		os.Exit(1)
 	}
