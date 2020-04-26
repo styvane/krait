@@ -2,7 +2,6 @@ package jwt
 
 import (
 	"github.com/dgrijalva/jwt-go/v4"
-	"github.com/hutsharing/krait/config"
 )
 
 type Token struct {
@@ -13,7 +12,7 @@ type claim struct {
 	jwt.StandardClaims
 }
 
-func NewToken(cfg *config.JWT) (*Token, error) {
+func NewToken(cfg *config) (*Token, error) {
 	c := claim{
 		jwt.StandardClaims{
 			Issuer: cfg.Issuer,
@@ -24,7 +23,7 @@ func NewToken(cfg *config.JWT) (*Token, error) {
 	return &Token{Key: ss}, err
 }
 
-func DecodeToken(ss string, cfg *config.JWT) (*jwt.Token, error) {
+func DecodeToken(ss string, cfg *config) (*jwt.Token, error) {
 	return &jwt.Token{}, nil
 }
 
