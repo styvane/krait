@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/hutsharing/krait/config"
@@ -28,7 +29,7 @@ func init() {
 	serveCmd.Flags().UintP("port", "p", 9000, "Port to run server on.")
 
 	// Add host name flag
-	serveCmd.Flags().String("host", "127.0.0.1", "Allowed host")
+	serveCmd.Flags().String("host", "127.0.0.1", "Allowed host.")
 
 	// Bind the cobra flags to our config
 	viper.GetViper().BindPFlags(serveCmd.Flags())
@@ -39,6 +40,7 @@ func serve(cmd *cobra.Command, args []string) {
 	v := viper.GetViper()
 
 	cfg, err := config.Load(v)
+	fmt.Println(cfg)
 	if err != nil {
 		os.Exit(1)
 	}

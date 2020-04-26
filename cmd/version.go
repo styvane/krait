@@ -29,7 +29,6 @@ var versionCmd = &cobra.Command{
 	Long:    "Print current server version.",
 	Version: Version,
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.SetVersionTemplate(cmd.VersionTemplate())
 		tpl := template.Must(template.New("version").Parse(cmd.VersionTemplate()))
 		tpl.Execute(os.Stdout, cmd.Root())
 	},
