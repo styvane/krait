@@ -39,6 +39,7 @@ func TestInsertOne(t *testing.T) {
 	dbname := "devtestxxxx"
 	err = client.InsertOne(ctx, dbname, "devtestxxxx", bson.M{"test": "test"})
 	assert.Nil(t, err)
+
 	t.Cleanup(func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
