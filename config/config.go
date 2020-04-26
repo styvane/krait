@@ -4,24 +4,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-// JWT defines configuration data for JWT token
-type JWT struct {
-	Secret string
-	Issuer string
-}
-
-// TWILIO defines twilio configuration data
-type Twilio struct {
-	SID   string
-	Token string
-}
-
-// Application configuration informations
+// Config define application configuration
 type Config struct {
 	Port uint
 	Host string
-	JWT
-	Twilio Twilio
 }
 
 // Load create a configuration from a viper instance
