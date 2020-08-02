@@ -5,7 +5,7 @@ import (
 )
 
 type Token struct {
-	Key string `json:"key"`
+	Key string `json:"key" bson:"token"`
 }
 
 type claim struct {

@@ -17,5 +17,6 @@ func PhoneNumber(phoneNumber, countryCode string) error {
 	if !libphonenumber.IsValidNumberForRegion(p, c) {
 		return errors.New("Invalid phone number")
 	}
+
 	return nil
 }

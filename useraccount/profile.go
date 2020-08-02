@@ -5,34 +5,33 @@ import (
 	"github.com/ttacon/libphonenumber"
 )
 
-// passport describes required passport data.
+// Passport describes required passport data.
 type Passport struct {
-	Number         string `json:"number" validate:"required"`
-	DateIssue      string `json:"dateIssue" validate:"required"`
-	DateExpiration string `json:"expirationDate validate:"required"`
-	BirthPlace     string `json:"birthDate" validate:"required"`
+	Number         string `json:"number" validate:"required" bson:"number"`
+	DateIssue      string `json:"dateIssue" validate:"required" bson:"dateIssue"`
+	DateExpiration string `json:"expirationDate validate:"required" bson:"expirationDate"`
+	BirthPlace     string `json:"birthDate" validate:"required" bson:"birthPlace"`
 }
 
-// Profile describes the information to create profile.
-type Profile struct {
-	FirstName   string                      `json:"firstname" validate:"required"`
-	Surname     string                      `json:"surname" validate:"required"`
-	Patronym    string                      `json:"patronym,omitempty"`
-	BirthDate   string                      `json:"birthDate" validate:"required"`
-	Email       string                      `json:"email" validate:"required,email"`
-	Passort     *Passport                   `json:"passport" validate:"required,dive"`
-	PhoneNumber *libphonenumber.PhoneNumber `json:"phoneNumber" validate:"required"`
+// profile describes the information to create profile.
+type profile struct {
+	FirstName                   string `json:"firstname" validate:"required" bson:"firstName"`
+	Surname                     string `json:"surname" validate:"required" bson:"surName"`
+	Patronym                    string `json:"patronym,omitempty" bson:"patronym"`
+	*Passport                   `json:"passport" validate:"required,dive"`
+	Email                       string `json:"email" validate:"required,email"`
+	*libphonenumber.PhoneNumber `json:"phoneNumber" validate:"required" bson:"phoneNumber"`
 }
 
 // New create a new profile
-func New() *Profile {
-	p := &Profile{}
+func New() *profile {
+	p := &profile{}
 	return p
 }
 
 // Validate validates Profile.
 // It returns nil if the struct is valid or the error if the struct is invalid.
-func (p *Profile) Validate() error {
+func (p *profile) Validate() error {
 	validate := validator.New()
 	return validate.Struct(p)
 }

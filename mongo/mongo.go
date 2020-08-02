@@ -12,13 +12,19 @@ import (
 
 // MongoOperation wraps all database operations
 type MongoOperation interface {
-	InsertOne(ctx context.Context, dbname string, collection string, data interface{}) error
+	InsertOne(ctx context.Context, dc *DBEntity, data interface{}) error
 }
 
 // MongoClient represent mongodb client
 type MongoClient struct {
 	log *zap.SugaredLogger
 	*mongo.Client
+}
+
+// DBEntity represents a database and an associated collection
+type DBEntity struct {
+	Name       string
+	Collection string
 }
 
 // InitiClient create MongoClient with a connected mongo client.
@@ -42,9 +48,9 @@ func InitClient(cfg *config) (*MongoClient, error) {
 	return mc, err
 }
 
-func (c *MongoClient) InsertOne(ctx context.Context, dbname string, collection string, data interface{}) error {
-	db := c.Database(dbname)
-	coll := db.Collection(collection)
+func (c *MongoClient) InsertOne(ctx context.Context, de *DBEntity, data interface{}) error {
+	db := c.Database(de.Name)
+	coll := db.Collection(de.Collection)
 	_, err := coll.InsertOne(ctx, data)
 	return err
 }

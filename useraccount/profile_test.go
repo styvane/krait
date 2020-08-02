@@ -8,13 +8,12 @@ import (
 
 func TestCheckValidProfile(t *testing.T) {
 	passport := &Passport{"s555051", "2020-01-01", "2020-01-01", "Russia"}
-	p := &Profile{
+	p := &profile{
 		"Tom",
 		"Jerry",
 		"",
-		"1918-01-01",
-		"xxx@example.com",
 		passport,
+		"xxx@example.com",
 		libphonenumber.GetExampleNumber("RU"),
 	}
 	if err := p.Validate(); err != nil {
